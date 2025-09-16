@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 import { connectDB } from "@/app/lib/db";
 import { User } from "@/app/lib/userModel";
 
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const { email, password } = await req.json();
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     await newUser.save();
 
     return NextResponse.json({ message: "User registered successfully" });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Registration failed" }, { status: 500 });
   }
 }
